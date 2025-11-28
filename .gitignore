@@ -1,0 +1,61 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual Environment
+venv/
+ENV/
+env/
+
+# IDE - User-specific settings
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Exception: Keep Kiro IDE configuration
+!.kiro/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Kiro IDE - Keep MCP config template but ignore with real keys
+# Users should add their own API keys locally
+.kiro/settings/mcp.local.json
+
+# Hypothesis
+.hypothesis/
+
+# Pytest
+.pytest_cache/
+
+# Coverage
+htmlcov/
+.coverage
+.coverage.*
+coverage.xml
+
+# MyPy
+.mypy_cache/
+.dmypy.json
+dmypy.json

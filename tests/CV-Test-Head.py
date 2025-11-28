@@ -19,8 +19,8 @@ PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 if PROJECT_ROOT not in sys.path:
     sys.path.insert(0, PROJECT_ROOT)
 
-from kiro_motion_kit.controllers.head_controller import HeadTracker
-from kiro_motion_kit.gestures.head_gestures import (
+from kiro_motion_magic.controllers.head_controller import HeadTracker
+from kiro_motion_magic.gestures.head_gestures import (
     is_nod_up,
     is_nod_down,
     is_turn_left,
