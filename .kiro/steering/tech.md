@@ -13,12 +13,12 @@ Python 3.x (uses dataclasses, type hints)
 
 ## Common Commands
 
-### Running Demo Applications
+### Running Example Games
 
 ```bash
 # From project root
-python demo-apps/demo_pygame_cursor.py
-python demo-apps/demo_pygame_keyboard.py
+python my_apps/cursor-demo/main.py
+python my_apps/keyboard-demo/main.py
 ```
 
 ### Installing Dependencies

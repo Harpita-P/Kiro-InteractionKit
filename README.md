@@ -1,180 +1,302 @@
 # Kiro Motion Kit
 
-A gesture recognition library for Python that enables touchless interaction with applications using computer vision.
+A gesture recognition library for Python that enables touchless interaction with applications using computer vision. Build gesture-controlled games and applications with hand, head, and face tracking.
 
-## Overview
+## What Can You Build?
 
-Kiro Motion Kit provides a framework for detecting both hand gestures and head poses via webcam and mapping them to game or application actions. The library is designed to be framework-agnostic but includes Pygame demo applications showing cursor control and on-screen keyboard interaction driven entirely by gestures.
+Kiro Motion Kit empowers developers to create innovative gesture-controlled applications:
 
-## Available Gestures
+- 🎮 **Games** - Fruit Ninja clones, rhythm games, fighting games, puzzle games
+- 🎨 **Interactive Art** - Gesture-driven installations, digital paintings, music visualizers
+- ♿ **Accessibility Tools** - Hands-free computer control, assistive interfaces
+- 📊 **Presentations** - Gesture-controlled slides, interactive demos
+- 📚 **Educational Apps** - Interactive learning tools, sign language tutors
+- 🎵 **Music Controllers** - Air instruments, DJ controllers, sound synthesizers
+- 🏥 **Healthcare Apps** - Touchless medical interfaces, physical therapy tools
+- 🎯 **Fitness Apps** - Exercise trackers, yoga pose detection, dance games
 
-### Face Gestures
+## Features
 
-Kiro Motion Kit supports facial expression detection:
-
-#### 1. Blink
-**Function:** `is_blink()`  
-**Detection Logic:** Uses Eye Aspect Ratio (EAR) to detect eye closure. Detects when both eyes are closed by measuring the vertical distance between upper and lower eyelids relative to the horizontal distance. MediaPipe Face Mesh landmarks: Left eye (159, 145, 33, 133), Right eye (386, 374, 263, 362).
-
-#### 2. Mouth Open
-**Function:** `is_mouth_open()`  
-**Detection Logic:** Uses Mouth Aspect Ratio (MAR) to detect mouth opening. Measures the vertical distance between upper lip (landmark 13) and lower lip (landmark 14) relative to the horizontal distance between left mouth corner (landmark 78) and right mouth corner (landmark 308). Returns true when MAR exceeds threshold (default 0.03).
-
-#### 3. Smiling
-**Function:** `is_smiling()`  
-**Detection Logic:** Detects smile by measuring the upward movement of mouth corners relative to the mouth center. Checks if both left corner (landmark 61) and right corner (landmark 291) are elevated above the mouth center (average of landmarks 0 and 17) by more than the threshold (default 0.015).
-
-### Hand Gestures
-
-Kiro Motion Kit currently supports the following hand gestures:
-
-### 1. Fist (Closed Hand)
-**Function:** `is_hand_closed()`  
-**Detection Logic:** Detects when the middle fingertip (landmark 12) is significantly lower than the base of the middle finger (landmark 9), indicating a closed fist.
-
-### 2. Pinch
-**Function:** `is_pinch_gesture()`  
-**Detection Logic:** Measures the Euclidean distance between thumb tip (landmark 4) and index fingertip (landmark 8). Returns true when they are close together (within threshold).
-
-### 3. Peace Sign
-**Function:** `is_peace_sign()`  
-**Detection Logic:** Detects when index and middle fingers are extended upward and separated (forming a "V"), while ring and pinky fingers are curled down.
-
-### 4. Thumbs Up
-**Function:** `is_thumbs_up()`  
-**Detection Logic:** Detects when the thumb is extended upward while all other fingers (index, middle, ring, pinky) are curled down.
-
-### 5. Rock Sign (Devil Horns)
-**Function:** `is_rock_sign()`  
-**Detection Logic:** Detects when index and pinky fingers are extended upward and separated, while middle and ring fingers are curled down.
-
-### 6. Open Hand
-**Function:** `is_open_hand()`  
-**Detection Logic:** Detects when all fingers are extended above their PIP joints and spread apart horizontally (minimum spread threshold of 0.15).
-
-### 7. Pointing
-**Function:** `is_pointing()`  
-**Detection Logic:** Detects when the index finger is extended upward while middle, ring, and pinky fingers are curled down.
-
-### 8. OK Sign
-**Function:** `is_ok_sign()`  
-**Detection Logic:** Detects when thumb tip and index fingertip are touching (forming a circle), while middle, ring, and pinky fingers are extended upward.
-
-### 9. Thumbs Down
-**Function:** `is_thumbs_down()`  
-**Detection Logic:** Detects when the thumb is extended downward while all other fingers (index, middle, ring, pinky) are curled down.
-
-### Head Gestures
-
-Kiro Motion Kit also supports head pose tracking:
-
-#### 1. Nod Up
-**Function:** `is_nod_up()`  
-**Detection Logic:** Detects when head x-axis rotation exceeds 15 degrees (looking up).
-
-#### 2. Nod Down
-**Function:** `is_nod_down()`  
-**Detection Logic:** Detects when head x-axis rotation is below -15 degrees (looking down).
-
-#### 3. Turn Left
-**Function:** `is_turn_left()`  
-**Detection Logic:** Detects when head y-axis rotation is below -20 degrees (turning left).
-
-#### 4. Turn Right
-**Function:** `is_turn_right()`  
-**Detection Logic:** Detects when head y-axis rotation exceeds 20 degrees (turning right).
-
-#### 5. Tilt Left
-**Function:** `is_tilt_left()`  
-**Detection Logic:** Detects when head z-axis rotation is below -15 degrees (tilting left).
-
-#### 6. Tilt Right
-**Function:** `is_tilt_right()`  
-**Detection Logic:** Detects when head z-axis rotation exceeds 15 degrees (tilting right).
-
-## Installation
-
-```bash
-pip install -r requirements.txt
-```
+- **Hand Gestures**: Fist, pinch, peace sign, thumbs up/down, rock sign, open hand, pointing, OK sign
+- **Head Gestures**: Nod up/down, turn left/right, tilt left/right
+- **Face Gestures**: Blink, mouth open, smiling
+- **Direct Controller API**: Simple, framework-agnostic gesture detection
+- **Pygame Ready**: Perfect for building gesture-controlled games
 
 ## Quick Start
 
-```python
-from kiro_motion_kit import HandInputManager, dispatch_gesture_events, get_event_bus
-import cv2
-
-# Initialize hand input manager
-hand_input = HandInputManager()
-
-# Set up event listeners
-bus = get_event_bus()
-bus.on("gesture.pinch.start", lambda data: print("Pinch detected!"))
-
-# Process camera frames
-cap = cv2.VideoCapture(0)
-while True:
-    success, frame = cap.read()
-    if not success:
-        break
-    
-    actions, annotated_frame = hand_input.update_from_frame(frame)
-    dispatch_gesture_events(actions)
-    
-    # Your application logic here
-    if actions.is_pinch:
-        print(f"Cursor at: {actions.cursor_x}, {actions.cursor_y}")
-
-cap.release()
-hand_input.close()
-```
-
-## Demo Applications
-
-Run the included demos to see gestures in action:
+### 1. Clone and Open in Kiro IDE
 
 ```bash
-# Gesture-controlled circle with size/color changes
-python demo-apps/demo_pygame_cursor.py
-
-# On-screen keyboard with pinch-to-type
-python demo-apps/demo_pygame_keyboard.py
+git clone <your-repo-url>
+cd Kiro-Motion-Kit
+# Open in Kiro IDE
 ```
 
-## Architecture
+### 2. Configure Context7 MCP (Required)
 
-Kiro Motion Kit uses an event-driven layered architecture:
+Kiro uses Context7 MCP to provide up-to-date MediaPipe documentation and pygame best practices.
 
-1. **Camera frame** → HandTracker → HandTrackingState
-2. **HandTrackingState** → HandInputManager → HandInputSnapshot (with edge detection)
-3. **HandInputSnapshot** → gesture_dispatcher → `gesture.*` events
-4. **ActionMapper** subscribes to `gesture.*`, fires `game.*` events
-5. **Game logic** subscribes to `game.*` events
+1. Open Kiro Settings → MCP
+2. Add your Context7 API key
+3. This enables Kiro to help you with:
+   - MediaPipe landmark detection
+   - Creating new gestures
+   - Pygame best practices
+   - Real-time documentation lookup
 
-This decoupling allows gesture detection to be independent of game logic.
+### 3. Understand the Template
 
-## Event System
+**Hooks** (`.kiro/hooks/`) - Pre-configured automation for:
+- Auto-integrating new hand gestures
+- Auto-integrating new face gestures
+- Auto-integrating new head gestures
 
-Each gesture fires start/end events:
-- `gesture.closed.start` / `gesture.closed.end`
-- `gesture.pinch.start` / `gesture.pinch.end`
-- `gesture.peace.start` / `gesture.peace.end`
-- `gesture.thumbs_up.start` / `gesture.thumbs_up.end`
-- `gesture.rock_sign.start` / `gesture.rock_sign.end`
-- `gesture.open_hand.start` / `gesture.open_hand.end`
-- `gesture.pointing.start` / `gesture.pointing.end`
-- `gesture.ok_sign.start` / `gesture.ok_sign.end`
-- `gesture.thumbs_down.start` / `gesture.thumbs_down.end`
+**Steering Docs** (`.kiro/steering/`) - Development guidelines for:
+- Game/app architecture patterns
+- Gesture usage best practices
+- Testing approach
+- Project structure
 
-Map these to custom application actions using the ActionMapper.
+### 4. Create Your First App with Specs
+
+The recommended way to build with Kiro Motion Kit:
+
+1. **Create a new spec** in Kiro IDE
+2. **Define requirements** - What gestures and features you need
+3. **Design architecture** - How your app will work
+4. **Generate tasks** - Step-by-step implementation plan
+5. **Build with Kiro** - Let Kiro help you implement each task
+
+This spec-driven approach ensures clean architecture and proper gesture integration.
+
+### 5. Test Your Camera and Gestures
+
+```bash
+# Test hand gestures
+python tests/CV-Test-Hands.py
+
+# Test head gestures
+python tests/CV-Test-Head.py
+
+# Test face gestures
+python tests/CV-Test-Face.py
+```
+
+### 6. Build Your First App (Manual Approach)
+
+Create a new game folder:
+
+```bash
+mkdir -p my_apps/my-game
+cd my_apps/my-game
+```
+
+Create `main.py`:
+
+```python
+import os, sys, cv2, pygame
+
+# Add project root to path
+PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+sys.path.insert(0, PROJECT_ROOT)
+
+from kiro_motion_kit.controllers.hand_controller import HandTracker
+
+def main():
+    pygame.init()
+    screen = pygame.display.set_mode((800, 600))
+    clock = pygame.time.Clock()
+    
+    cap = cv2.VideoCapture(0)
+    tracker = HandTracker()
+    
+    score = 0
+    prev_pinch = False
+    
+    running = True
+    while running:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
+        
+        success, frame = cap.read()
+        if success:
+            _, state = tracker.process_frame(frame)
+            
+            # Detect pinch to increment score
+            if state.is_pinch and not prev_pinch:
+                score += 1
+            prev_pinch = state.is_pinch
+        
+        # Draw
+        screen.fill((30, 30, 30))
+        font = pygame.font.Font(None, 72)
+        text = font.render(f"Score: {score}", True, (255, 255, 255))
+        screen.blit(text, (250, 250))
+        
+        pygame.display.flip()
+        clock.tick(30)
+    
+    cap.release()
+    tracker.close()
+    pygame.quit()
+
+if __name__ == "__main__":
+    main()
+```
+
+Run your game:
+
+```bash
+python my_apps/my-game/main.py
+```
+
+## Available Gestures
+
+### Hand Gestures (HandTracker)
+
+```python
+from kiro_motion_kit.controllers.hand_controller import HandTracker
+
+tracker = HandTracker()
+_, state = tracker.process_frame(frame)
+
+# Available attributes:
+state.is_closed       # Fist
+state.is_pinch        # Pinch (thumb + index)
+state.is_peace        # Peace sign
+state.is_thumbs_up    # Thumbs up
+state.is_thumbs_down  # Thumbs down
+state.is_rock_sign    # Rock sign (index + pinky)
+state.is_open_hand    # Open hand
+state.is_pointing     # Pointing
+state.is_ok_sign      # OK sign
+state.cursor_x        # Normalized x position (0-1)
+state.cursor_y        # Normalized y position (0-1)
+```
+
+### Head Gestures (HeadTracker)
+
+```python
+from kiro_motion_kit.controllers.head_controller import HeadTracker
+from kiro_motion_kit.gestures.head_gestures import is_nod_up, is_nod_down, is_turn_left, is_turn_right
+
+tracker = HeadTracker()
+_, state = tracker.process_frame(frame)
+
+if is_nod_up(state.x_axis):
+    print("Nodding up")
+```
+
+### Face Gestures (FaceTracker)
+
+```python
+from kiro_motion_kit.controllers.face_controller import FaceTracker
+
+tracker = FaceTracker()
+_, state = tracker.process_frame(frame)
+
+# Available attributes:
+state.is_blink        # Eyes closed
+state.is_smiling      # Smiling
+state.is_mouth_open   # Mouth open
+```
+
+## Example Applications
+
+Here are some ideas to inspire your next project:
+
+### Games
+- **Fruit Slicer** - Slice falling fruits with pinch gestures
+- **Rhythm Game** - Hit notes with timed hand movements
+- **Fighting Game** - Punch and block with fist gestures
+- **Puzzle Game** - Rotate pieces with head tilts
+
+### Interactive Art
+- **Gesture Painter** - Draw with hand movements, change colors with gestures
+- **Music Visualizer** - Control visuals with hand position and gestures
+- **Particle System** - Manipulate particles with hand movements
+- **Light Controller** - Control smart lights with gestures
+
+### Accessibility Tools
+- **Hands-Free Mouse** - Control cursor with head movements
+- **Gesture Keyboard** - Type with pinch gestures
+- **Voice-Free Communication** - Use gestures to trigger pre-recorded messages
+- **Assistive Browser** - Navigate web pages with gestures
+
+### Educational Apps
+- **Sign Language Tutor** - Learn and practice sign language
+- **Math Game** - Answer questions with gesture-based input
+- **Typing Tutor** - Practice typing with gesture keyboard
+- **Music Lessons** - Learn instruments with air gestures
+
+## Project Structure
+
+```
+Kiro-Motion-Kit/
+├── kiro_motion_kit/          # Core library (don't modify)
+│   ├── controllers/          # Hand, head, face trackers
+│   ├── gestures/             # Gesture detection functions
+│   └── utils/                # Helper utilities
+├── my_apps/                  # Your applications go here
+│   └── <app-name>/
+│       ├── main.py           # App entry point
+│       ├── assets/           # App assets
+│       └── README.md         # App documentation
+├── tests/                    # CV test demos
+└── .kiro/                    # Kiro IDE configuration
+```
+
+## Building with Kiro IDE (Recommended)
+
+This template is optimized for use with **Kiro IDE**:
+
+### Why Kiro IDE?
+- **Spec-Driven Development** - Build apps systematically with requirements → design → tasks
+- **Context7 Integration** - Real-time MediaPipe and pygame documentation
+- **Auto-Integration Hooks** - Automatically integrate new gestures into controllers
+- **Steering Docs** - Built-in guidelines for best practices
+
+### Getting Started with Kiro
+1. Clone this repo and open in Kiro IDE
+2. Configure Context7 MCP with your API key (Settings → MCP)
+3. Create a new spec for your app
+4. Let Kiro guide you through requirements, design, and implementation
+
+### Manual Development
+You can also build without Kiro IDE - just follow the patterns in `.kiro/steering/game-development.md`
+
+## Development Guide
+
+See `.kiro/steering/game-development.md` for detailed guidelines on:
+- App architecture patterns
+- Gesture usage best practices
+- Asset management
+- Testing approach
+- Creating new gestures
 
 ## Requirements
 
 - Python 3.x
-- mediapipe
-- opencv-python
-- pygame (for demos)
-- pyautogui (for system-level automation)
+- Webcam
+- Dependencies in `requirements.txt`:
+  - mediapipe (gesture detection)
+  - opencv-python (camera processing)
+  - pygame (game framework)
+  - pyautogui (system automation)
+
+## Examples
+
+Check the `tests/` folder for interactive CV test demos that show all available gestures in action.
+
+## Contributing
+
+When adding new gestures:
+1. Add gesture detection function to appropriate folder in `kiro_motion_kit/gestures/`
+2. Update the controller to use the new gesture
+3. Add the gesture to the tracking state dataclass
+4. Create/update CV test file to demonstrate the gesture
 
 ## License
 
