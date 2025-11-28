@@ -30,8 +30,8 @@ This kit includes pre-defined foundational logic for multiple hand, head, and fa
 ### 1. Clone and Open in Kiro IDE
 
 ```bash
-git clone <your-repo-url>
-cd Kiro-Motion-Kit
+git clone https://github.com/Harpita-P/Kiro-MotionMagic.git
+cd Kiro-MotionMagic
 # Open in Kiro IDE
 
 # macOS / Linux
