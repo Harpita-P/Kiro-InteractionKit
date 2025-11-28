@@ -1,0 +1,4 @@
+mediapipe
+opencv-python
+pygame
+pyautogui

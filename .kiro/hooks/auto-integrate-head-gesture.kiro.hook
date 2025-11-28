@@ -1,0 +1,18 @@
+{
+  "enabled": true,
+  "name": "Auto-integrate New Head Gesture",
+  "description": "Automatically integrates new head gesture detection functions into the Kiro Motion Kit framework by updating all necessary integration points across the codebase",
+  "version": "1",
+  "when": {
+    "type": "fileEdited",
+    "patterns": [
+      "kiro_motion_kit/head_gestures/*.py"
+    ]
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "A new head gesture file was just created or modified at {filePath}.\n\nPlease integrate this head gesture into the Kiro Motion Kit framework:\n\n1. Parse the gesture file to find the main detection function (should be named like is_*)\n2. Extract the gesture name (e.g., \"nod_up\" from \"is_nod_up\")\n3. Add the import to kiro_motion_kit/head_gestures/__init__.py (if not already present)\n4. Add the boolean field to HeadTrackingState in kiro_motion_kit/head_controller.py\n5. Call the detection function in HeadTracker.process_frame() and include in state (pass appropriate axis parameters: x_axis, y_axis, or z_axis)\n6. Add continuous state and edge event fields to HeadInputSnapshot in kiro_motion_kit/head_input.py (create this file if it doesn't exist, following the pattern of hand_input.py)\n7. Add edge detection logic in HeadInputManager._compute_actions()\n8. Wire up event dispatching in kiro_motion_kit/events/gesture_dispatcher.py (or create head_gesture_dispatcher.py)\n9. Update README.md to document this gesture in the \"Head Gestures\" section with its function name and detection logic\n\nFollow the existing patterns for head gestures like \"nod_up\", \"turn_left\", and \"tilt_right\".\n\nIMPORTANT: Skip this integration if the file is __init__.py or is in __pycache__.\n\nAfter integration, confirm what gesture name was detected and list the files that were modified."
+  },
+  "workspaceFolderName": "Kiro-Motion-Kit",
+  "shortName": "auto-integrate-head-gesture"
+}
