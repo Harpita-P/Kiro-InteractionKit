@@ -1,10 +1,12 @@
+![Kiro InteractionKit Banner](Github-Banner.png)
+
 # Kiro InteractionKit
 
-A clean, starter-friendly template for building **gesture-controlled games, creative apps, and interactive experiences** using Kiro.
+A clean, starter-friendly template for building gesture-controlled games, creative apps, and interactive experiences using Kiro.
 
 Kiro InteractionKit gives developers a lightweight, flexible foundation for turning real-time **hand, face, and head tracking** into simple, intuitive controls. 
 
-This code skeleton removes all the complexity of **MediaPipe + Computer Vision code** and gives you a clear **interaction layer** you can plug directly into games, creative apps & accessibility tools.
+This code skeleton removes all the complexity of MediaPipe + Computer Vision code and gives you a clear interaction layer you can plug directly into games, creative apps & accessibility tools.
 
 Want to build a **Mario-style game where jumping = open palm**? Make **music just by moving your head**? Or **draw in mid-air with your fingertip** for a fresh twist on Pictionary? Speed up development and build  creative apps with the Kiro InteractionKit.
 
