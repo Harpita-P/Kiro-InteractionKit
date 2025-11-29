@@ -17,14 +17,22 @@ Want to build a **Mario-style game where jumping = open palm**? Make **music jus
 
 <table>
 <tr>
-<td width="40%">
-  <img src="Math-O-Lantern-App.png" width="100%">
+<td align="center">
+
+<img src="Math-O-Lantern-App.png" height="200" style="margin-right:8px;" />
+<img src="https://github.com/Harpita-P/Kiro-InteractionKit/blob/main/MathGame.gif?raw=true" height="200" />
+
 </td>
-<td width="60%">
-  <strong>A fun, hand-controlled pumpkin-slicing game</strong> where players solve quick math problems by pinching to slice the correct pumpkins.<br><br>
-  <strong>Try it Out:</strong> https://your-demo-link.com  
-  <br><br>
-  Built using Kiro’s <strong>pinch detection</strong>, <strong>hand tracking</strong>, and <strong>stabilized gesture signals</strong>, making gameplay feel responsive without any custom CV code.
+</tr>
+
+<tr>
+<td>
+
+<strong>A fun, hand-controlled pumpkin-slicing game</strong> where players solve quick math problems by pinching to slice the correct pumpkins.<br><br>
+
+**Try it Out:** https://your-demo-link.com  
+Built using Kiro’s <strong>pinch detection</strong>, <strong>hand tracking</strong>, and 
+<strong>stabilized gesture signals</strong>, making gameplay feel responsive without any custom CV code.
 </td>
 </tr>
 </table>
