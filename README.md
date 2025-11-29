@@ -11,23 +11,39 @@ This code skeleton removes all the complexity of **MediaPipe + Computer Vision c
 Want to build a **Mario-style game where jumping = open palm**? Make **music just by moving your head**? Or **draw in mid-air with your fingertip** for a fresh twist on Pictionary? Speed up development and build  creative apps with the Kiro InteractionKit.
 
 ---
-## Featured Applications Built With Kiro InteractionKit
+### 1. Math-O-Lantern (Interactive Game)
 
-### 1. Math-O-Lantern (Interactive Game)  
-A fun, gesture-controlled pumpkin-slicing game where players solve quick math problems by pinching to slice the correct pumpkins.
-![Math-O-Lantern Preview](your-image-here.png)  
-**Live Demo:** https://your-demo-link.com  
-
- Built using Kiro’s **pinch detection**, **hand tracking**, and **stabilized gesture signals**, making gameplay feel responsive without any custom CV code.
+<table>
+<tr>
+<td width="40%">
+  <img src="Math-O-Lantern-App.png" width="100%">
+</td>
+<td width="60%">
+  <strong>A fun, hand-controlled pumpkin-slicing game</strong> where players solve quick math problems by pinching to slice the correct pumpkins.<br><br>
+  <strong>Try it Out:</strong> https://your-demo-link.com  
+  <br><br>
+  Built using Kiro’s <strong>pinch detection</strong>, <strong>hand tracking</strong>, and <strong>stabilized gesture signals</strong>, making gameplay feel responsive without any custom CV code.
+</td>
+</tr>
+</table>
 
 ---
 
-### 2. Draw My AAC  (Accessibility Tool)  
-An accessibility tool that helps non-verbal kids & adults communicate through custom air-drawn gestures. 
-![Draw My AAC Preview](your-image-here-2.png)  
-**Live Demo:** https://your-demo-link.com  
+### 2. Draw My AAC (Accessibility Tool)
 
-This app uses Kiro’s **air-drawing**, **gesture mapping**, and **face/hand tracking** to let users create and trigger their own personalized communication actions.
+<table>
+<tr>
+<td width="40%">
+  <img src="Math-O-Lantern-App.png" width="100%">
+</td>
+<td width="60%">
+  <strong>An accessibility tool</strong> that helps non-verbal kids & adults communicate through custom air-drawn gestures.<br><br>
+  <strong>Live Demo:</strong> https://your-demo-link.com  
+  <br><br>
+  This app uses Kiro’s <strong>air-drawing</strong>, <strong>gesture mapping</strong>, and <strong>face/hand tracking</strong> to let users create and trigger their own personalized communication actions.
+</td>
+</tr>
+</table>
 
 ---
 
