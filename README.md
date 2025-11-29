@@ -30,7 +30,7 @@ Want to build a **Mario-style game where jumping = open palm**? Make **music jus
 
 <strong>A fun, hand-controlled pumpkin-slicing game</strong> where players solve quick math problems by pinching to slice the correct pumpkins.<br><br>
 
-**Try it Out:** https://your-demo-link.com  
+**Play the Game →** [**Test the Featured Applications**](#2-test-the-featured-applications)<br><br>
 Built using Kiro’s <strong>pinch detection</strong>, <strong>hand tracking</strong>, and 
 <strong>stabilized gesture signals</strong>, making gameplay feel responsive without any custom CV code.
 </td>
@@ -75,7 +75,19 @@ cd Kiro-InteractionKit
 The setup script tests your camera and prepares the environment with Mediapipe, OpenCV, Pygame, and PyAutoGUI.
 
 ---
+## 2. Test the Featured Applications
 
+After completing setup, you can run the 2 app inside the `my_apps` folder.
+
+### ▶️ Run Math-O-Lantern (Interactive Game)
+
+```bash
+python my_apps/Math-O-Lantern/main.py
+
+### ▶️ Run AAC (Accessibility Tool)
+```bash
+python my_apps/AAC/main.py
+---
 ## 2. Leverage Kiro’s Superpowers
 
 This starter kit works best with the Kiro IDE, which automates key parts of building gesture-controlled apps.
