@@ -11,8 +11,27 @@ This code skeleton removes all the complexity of **MediaPipe + Computer Vision c
 Want to build a **Mario-style game where jumping = open palm**? Make **music just by moving your head**? Or **draw in mid-air with your fingertip** for a fresh twist on Pictionary? Speed up development and build  creative apps with the Kiro InteractionKit.
 
 ---
+## Featured Applications Built With Kiro InteractionKit
 
-# Get Started
+### 1. Math-O-Lantern (Interactive Game)  
+A fun, gesture-controlled pumpkin-slicing game where players solve quick math problems by pinching to slice the correct pumpkins.
+![Math-O-Lantern Preview](your-image-here.png)  
+**Live Demo:** https://your-demo-link.com  
+
+ Built using Kiro’s **pinch detection**, **hand tracking**, and **stabilized gesture signals**, making gameplay feel responsive without any custom CV code.
+
+---
+
+### 2. Draw My AAC  (Accessibility Tool)  
+An accessibility tool that helps non-verbal kids & adults communicate through custom air-drawn gestures. 
+![Draw My AAC Preview](your-image-here-2.png)  
+**Live Demo:** https://your-demo-link.com  
+
+This app uses Kiro’s **air-drawing**, **gesture mapping**, and **face/hand tracking** to let users create and trigger their own personalized communication actions.
+
+---
+
+# Get Started with InteractionKit
 
 ## 1. Clone and Open in Kiro IDE
 
