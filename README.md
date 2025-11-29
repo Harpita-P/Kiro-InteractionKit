@@ -91,10 +91,10 @@ python my_apps/AAC/main.py
 
 ---
 ## 3. Leverage Kiro's Superpowers
-This starter kit works best with the Kiro IDE, which automates key parts of building gesture-controlled apps.
+This starter kit is designed to work the Kiro IDE, which automates key parts of building gesture-controlled apps.
 
 ### **Hooks**  
-Kiro uses the three Hooks in `.kiro/hooks/` to automatically integrate any new hand, head, or face gestures you request in your spec. If a gesture doesn't already exist, Kiro generates the detection logic and wires it into the correct controller—you don't have to write any MediaPipe or Motion Tracking code.
+Kiro uses the 3 Hooks in `.kiro/hooks/` to automatically integrate any new hand, head, or face gestures you request in your spec. If a gesture doesn't already exist, Kiro generates the detection logic and wires it into the correct controller—you don't have to write any MediaPipe or Motion Tracking code.
 
 ### **Steering Docs**  
 The Steering Docs in `.kiro/steering/` guide Kiro on intended app architecture, proper gesture usage, and recommended testing approaches. These documents help ensure your InteractionKit project stays organized and scalable.
@@ -110,7 +110,7 @@ Kiro uses a **spec-driven** workflow: you describe what your app should do and h
 
 ## 4. Preview Hand, Face & Head Tracking Features
 
-Before building your app, preview the gesture tracking system. The InteractionKit template includes pre-built logic for hand, head, and face gestures using a clean controller-based API. You can preview all of the available gestures by running these tests:
+Before building a new app, preview the gesture tracking system. The InteractionKit template includes pre-built logic for hand, head, and face gestures using a clean controller-based API. You can preview all of the available gestures by running these tests:
 
 ```bash
 python tests/CV-Test-Head.py
@@ -124,8 +124,8 @@ Now, let's build a new InteractionKit app with Kiro by creating a spec!
 
 ---
 
-## 5. Create a New Spec
-In the Kiro IDE, you can create a new spec from the **Specs** panel in the left sidebar using the **+** button, or by opening the command palette and searching for “New Spec.” When writing a spec, keep it focused and clear. Describe what the app does and how gestures should control the experience. 
+## 5. Start a New Project & Create a Spec
+Delete the 2 existing applications in the `my_apps` folder and create a new folder for your app. Next, in the Kiro IDE, create a new spec from the **Specs** panel in the left sidebar using the **+** button, or by opening the command palette and searching for “New Spec.” When writing a spec, keep it focused and clear. Describe what the app does and how gestures should control the experience. 
 
 ### Example Spec for a Hand-Controlled Fruit Ninja Game  
 ```
