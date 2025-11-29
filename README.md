@@ -11,6 +11,8 @@ This code skeleton removes all the complexity of **MediaPipe + Computer Vision c
 Want to build a **Mario-style game where jumping = open palm**? Make **music just by moving your head**? Or **draw in mid-air with your fingertip** for a fresh twist on Pictionary? Speed up development and build  creative apps with the Kiro InteractionKit.
 
 ---
+## Featured Applications Built With Kiro InteractionKit
+
 ### 1. Math-O-Lantern (Interactive Game)
 
 <table>
