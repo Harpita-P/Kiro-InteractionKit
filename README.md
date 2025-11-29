@@ -17,7 +17,7 @@ cd Kiro-MotionMagic
 ./setup.sh
 
 # Windows
-setup.bat
+.\setup.bat
 ```
 
 The setup script tests your camera and prepares the environment with Mediapipe, OpenCV, Pygame, and PyAutoGUI.
