@@ -1,18 +1,18 @@
 {
   "enabled": true,
   "name": "Auto-integrate New Face Gesture",
-  "description": "Automatically integrates new face gesture detection functions into the Kiro MotionMagic framework by updating all necessary integration points across the codebase",
+  "description": "Automatically integrates new face gesture detection functions into the Kiro InteractionKit framework by updating all necessary integration points across the codebase",
   "version": "1",
   "when": {
     "type": "fileEdited",
     "patterns": [
-      "kiro_motion_magic/face_gestures/*.py"
+      "kiro_interaction_kit/gestures/face_gestures/*.py"
     ]
   },
   "then": {
     "type": "askAgent",
-    "prompt": "A new face gesture file was just created or modified at {filePath}.\n\nPlease integrate this face gesture into the Kiro MotionMagic framework:\n\n1. Parse the gesture file to find the main detection function (should be named like is_*)\n2. Extract the gesture name (e.g., \"blink\" from \"is_blink\")\n3. Add the import to kiro_motion_magic/gestures/face_gestures/__init__.py (if not already present)\n4. Add the boolean field to FaceTrackingState in kiro_motion_magic/controllers/face_controller.py\n5. Call the detection function in FaceTracker.process_frame() and include in state\n6. Add the new gesture to tests/CV-Test-Face.py:\n   - Import the detection function if needed\n   - Add gesture detection in process_gestures()\n   - Add to active_gestures list when detected\n   - Add to instructions list with gesture name and action\n   - Add gesture mapping to circle properties (size, color, or position)\n7. Update README.md to document this gesture in the \"Face Gestures\" section with its function name and detection logic\n\nFollow the existing patterns for gestures like \"blink\", \"mouth_open\", and \"smiling\".\n\nIMPORTANT: Skip this integration if the file is __init__.py or is in __pycache__.\n\nAfter integration, confirm what gesture name was detected and list the files that were modified."
+    "prompt": "A new face gesture file was just created or modified at {filePath}.\n\nPlease integrate this face gesture into the Kiro InteractionKit framework:\n\n1. Parse the gesture file to find the main detection function (should be named like is_*)\n2. Extract the gesture name (e.g., \"blink\" from \"is_blink\")\n3. Add the import to kiro_interaction_kit/gestures/face_gestures/__init__.py (if not already present)\n4. Add the boolean field to FaceTrackingState in kiro_interaction_kit/controllers/face_controller.py\n5. Call the detection function in FaceTracker.process_frame() and include in state\n6. Add the new gesture to tests/CV-Test-Face.py:\n   - Import the detection function if needed\n   - Add gesture detection in process_gestures()\n   - Add to active_gestures list when detected\n   - Add to instructions list with gesture name and action\n   - Add gesture mapping to circle properties (size, color, or position)\n7. Update README.md to document this gesture in the \"Face Gestures\" section with its function name and detection logic\n\nFollow the existing patterns for gestures like \"blink\", \"mouth_open\", and \"smiling\".\n\nIMPORTANT: Skip this integration if the file is __init__.py or is in __pycache__.\n\nAfter integration, confirm what gesture name was detected and list the files that were modified."
   },
-  "workspaceFolderName": "Kiro-Motion-Magic",
+  "workspaceFolderName": "Kiro-InteractionKit",
   "shortName": "auto-integrate-face-gesture"
 }

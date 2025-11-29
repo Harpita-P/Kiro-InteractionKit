@@ -96,8 +96,8 @@ PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 if PROJECT_ROOT not in sys.path:
     sys.path.insert(0, PROJECT_ROOT)
 
-from kiro_motion_magic.[type]_controller import [Type]Tracker
-from kiro_motion_magic.[type]_gestures import (
+from kiro_interaction_kit.controllers.[type]_controller import [Type]Tracker
+from kiro_interaction_kit.gestures.[type]_gestures import (
     # Import gesture detection functions
 )
 

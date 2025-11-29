@@ -1,8 +1,8 @@
 @echo off
-REM Kiro MotionMagic Setup Script for Windows
+REM Kiro InteractionKit Setup Script for Windows
 
 echo ==================================
-echo Kiro MotionMagic Setup
+echo Kiro InteractionKit Setup
 echo ==================================
 echo.
 

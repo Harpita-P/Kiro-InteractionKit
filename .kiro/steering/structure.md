@@ -1,6 +1,6 @@
 # Project Structure
 
-## Core Package: `kiro_motion_magic/`
+## Core Package: `kiro_interaction_kit/`
 
 The main library organized into modular components:
 
@@ -52,7 +52,7 @@ Simple CV test demos for testing gesture detection:
 
 ## Games: `my_apps/`
 
-User-created games using the Kiro MotionMagic framework. Each game should be in its own subdirectory.
+User-created games using the Kiro InteractionKit framework. Each game should be in its own subdirectory.
 
 **Example Games:**
 - `cursor-demo/` - Hand gesture-controlled circle demo
@@ -64,7 +64,7 @@ Each game folder should contain:
 - `README.md` - Game documentation
 - Game-specific assets, mappings, or utilities as needed
 
-**Important:** All game-specific code (assets, mappings, utilities) must be created within the game's folder under `my_apps/`. The core `kiro_motion_magic/` library should remain game-agnostic.
+**Important:** All game-specific code (assets, mappings, utilities) must be created within the game's folder under `my_apps/`. The core `kiro_interaction_kit/` library should remain game-agnostic.
 
 ## Architecture Pattern
 

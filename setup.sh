@@ -1,10 +1,10 @@
 #!/bin/bash
 
-# Kiro MotionMagic Setup Script
-# This script helps you get started with Kiro MotionMagic
+# Kiro InteractionKit Setup Script
+# This script helps you get started with Kiro InteractionKit
 
 echo "=================================="
-echo "Kiro MotionMagic Setup"
+echo "Kiro InteractionKit Setup"
 echo "=================================="
 echo ""
 

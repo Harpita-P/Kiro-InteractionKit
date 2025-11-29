@@ -1,17 +1,22 @@
-# Kiro MotionMagic
+# Kiro InteractionKit
 
-MotionMagic is a Kiro code template that helps you build innovative gesture-controlled games & apps **without writing any computer vision code**. It transforms real-time MediaPipe hand, face, and head tracking into motion inputs you can use directly in your next Python app or Pygame project.
+A clean, starter-friendly template for building **gesture-controlled games, creative apps, and interactive experiences** using Kiro.
 
-## What Can You Build?
-Ever wanted to control a game by pinching the air? Tilt your head to move a character? Blink to trigger an effect? This kit lets you build those ideas instantly. It turns your gestures into clean inputs you can map to any interaction — from games and creative tools to accessibility apps and hands-free controls. Check out these ideas for some inspiration!
+Kiro InteractionKit gives developers a lightweight, flexible foundation for turning real-time **hand, face, and head tracking** into simple, intuitive controls. 
+
+This code skeleton removes all the complexity of **MediaPipe + Computer Vision code** and gives you a clear **interaction layer** you can plug directly into games, creative apps & accessibility tools.
+
+Want to build a **Mario-style game where jumping = open palm**? Make **music just by moving your head**? Or **draw in mid-air with your fingertip** for a fresh twist on Pictionary? Speed up development and build  creative apps with the Kiro InteractionKit.
+
+---
 
 # Get Started
 
 ## 1. Clone and Open in Kiro IDE
 
 ```bash
-git clone https://github.com/Harpita-P/Kiro-MotionMagic.git
-cd Kiro-MotionMagic
+git clone https://github.com/Harpita-P/Kiro-InteractionKit.git
+cd Kiro-InteractionKit
 
 # macOS / Linux
 ./setup.sh
@@ -32,7 +37,7 @@ This starter kit works best with the Kiro IDE, which automates key parts of buil
 Kiro uses the three Hooks in `.kiro/hooks/` to automatically integrate any new hand, head, or face gestures you request in your spec. If a gesture doesn’t already exist, Kiro generates the detection logic and wires it into the correct controller—you don't have to write any MediaPipe or Motion Tracking code.
 
 ### **Steering Docs**  
-The Steering Docs in `.kiro/steering/` guide Kiro on intended app architecture, proper gesture usage, and recommended testing approaches. These documents help ensure your MotionMagic project stays organized and scalable.
+The Steering Docs in `.kiro/steering/` guide Kiro on intended app architecture, proper gesture usage, and recommended testing approaches. These documents help ensure your InteractionKit project stays organized and scalable.
 
 ### **MCP**  
 Through MCP in `.kiro/settings`, Kiro connects to **Context7**, giving it access to real-time MediaPipe and Pygame reference material. This allows it to generate accurate gesture-tracking logic and appropriate game components.  
@@ -46,7 +51,7 @@ Kiro uses a **spec-driven** workflow: you describe what your app should do and h
 
 ## 3. Preview Hand, Face & Head Tracking Features
 
-Before building your app, preview the gesture tracking system. The MotionMagic template includes pre-built logic for hand, head, and face gestures using a clean controller-based API. You can preview all of the available gestures by running these tests:
+Before building your app, preview the gesture tracking system. The InteractionKit template includes pre-built logic for hand, head, and face gestures using a clean controller-based API. You can preview all of the available gestures by running these tests:
 
 ```bash
 python tests/CV-Test-Hands.py
@@ -56,7 +61,7 @@ python tests/CV-Test-Face.py
 
 A full list of pre-defined gestures can be found [here](#pre-defined-gestures). 
 
-Now, let's build a new MotionMagic app with Kiro by creating a spec!
+Now, let's build a new InteractionKit app with Kiro by creating a spec!
 
 ---
 

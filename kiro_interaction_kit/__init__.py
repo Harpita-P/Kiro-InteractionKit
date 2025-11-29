@@ -1,4 +1,4 @@
-"""Kiro MotionMagic - Gesture Recognition Library
+"""Kiro InteractionKit - Gesture Recognition Library
 
 A lightweight library for detecting hand, head, and face gestures using MediaPipe.
 """

@@ -129,7 +129,7 @@ class HandTracker:
             lms = hand_landmarks.landmark
 
             # Gesture detection is delegated to reusable helpers in
-            # kiro_motion_magic.hand_gestures so new gestures can be added easily.
+            # kiro_interaction_kit.gestures.hand_gestures so new gestures can be added easily.
             is_closed = is_hand_closed(lms, close_threshold=self._close_threshold)
             is_pinch = is_pinch_gesture(lms, pinch_threshold=self._pinch_threshold)
             is_peace = is_peace_sign(lms)

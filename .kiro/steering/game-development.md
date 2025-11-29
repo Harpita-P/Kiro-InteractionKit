@@ -2,7 +2,7 @@
 inclusion: manual
 ---
 
-# Game Development Guide for Kiro MotionMagic
+# Game Development Guide for Kiro InteractionKit
 
 ## Critical Rules
 
@@ -26,7 +26,7 @@ inclusion: manual
 import os, sys, cv2, pygame
 PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 sys.path.insert(0, PROJECT_ROOT)
-from kiro_motion_magic.controllers.hand_controller import HandTracker
+from kiro_interaction_kit.controllers.hand_controller import HandTracker
 
 # 2. Game Class or Functions (game logic only)
 class Game:
@@ -85,7 +85,7 @@ Before starting ANY game implementation:
 2. **Direct controller usage** - No event systems or input managers needed
 3. **Assets in app folder** - Each app manages its own assets
 
-**Note**: The folder is called `my_apps/` (not `my_games/`) because Kiro MotionMagic can be used for any gesture-controlled application, not just games.
+**Note**: The folder is called `my_apps/` (not `my_games/`) because Kiro InteractionKit can be used for any gesture-controlled application, not just games.
 
 ## Application Structure
 
@@ -103,13 +103,13 @@ my_apps/<app-name>/
 ### Verify Attributes First
 Always check controller files for correct attribute names:
 ```python
-# Check kiro_motion_magic/controllers/hand_controller.py
+# Check kiro_interaction_kit/controllers/hand_controller.py
 # HandTrackingState has: is_pinch, is_closed, is_peace, etc.
 ```
 
 ### Basic Pattern
 ```python
-from kiro_motion_magic.controllers.hand_controller import HandTracker
+from kiro_interaction_kit.controllers.hand_controller import HandTracker
 
 tracker = HandTracker()
 cap = cv2.VideoCapture(0)
@@ -144,7 +144,7 @@ import os, sys, cv2, pygame
 PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 sys.path.insert(0, PROJECT_ROOT)
 
-from kiro_motion_magic.controllers.hand_controller import HandTracker
+from kiro_interaction_kit.controllers.hand_controller import HandTracker
 
 def main():
     pygame.init()
@@ -200,9 +200,9 @@ When user requests a new gesture based on MediaPipe landmarks or pose detection:
 1. **Use Context7** - Query Context7 for MediaPipe documentation and best practices
 2. **Check Landmarks** - Understand which landmarks are needed for the gesture
 3. **Create Gesture File** - Add to appropriate folder with proper naming:
-   - Hand: `kiro_motion_magic/gestures/hand_gestures/HA#_gesture_name.py`
-   - Head: `kiro_motion_magic/gestures/head_gestures/HE#_gesture_name.py`
-   - Face: `kiro_motion_magic/gestures/face_gestures/FA#_gesture_name.py`
+   - Hand: `kiro_interaction_kit/gestures/hand_gestures/HA#_gesture_name.py`
+   - Head: `kiro_interaction_kit/gestures/head_gestures/HE#_gesture_name.py`
+   - Face: `kiro_interaction_kit/gestures/face_gestures/FA#_gesture_name.py`
 4. **Update Controller** - Add gesture detection to controller's `process_frame()`
 5. **Update State** - Add new attribute to tracking state dataclass
 6. **Test Gesture** - Create/update CV test file to verify detection
