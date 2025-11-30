@@ -149,7 +149,7 @@ After creating your spec, Kiro will use the Hooks, Steering Docs, and MCP integr
 python my_apps/my-game/main.py
 ```
 
-That’s all it takes! With MotionMagic & Kiro, you can build creative gesture-controlled apps without writing any motion-tracking code.
+That’s all it takes! 
 
 ---
 
