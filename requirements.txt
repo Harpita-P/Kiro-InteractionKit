@@ -1,4 +1,6 @@
+# Core dependencies for Kiro InteractionKit
 mediapipe
 opencv-python
 pygame
 pyautogui
+pyaudio

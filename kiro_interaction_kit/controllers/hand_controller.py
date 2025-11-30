@@ -24,6 +24,7 @@ class HandTrackingState:
     cursor_x: Normalized x position (0-1) of the cursor, based on a fingertip.
     cursor_y: Normalized y position (0-1) of the cursor, based on a fingertip.
     handedness: "Left" or "Right" if available from Mediapipe, otherwise None.
+    landmarks: Raw landmark data from MediaPipe (list of landmarks with x, y, z coordinates).
     """
     is_present: bool = False
     is_closed: bool = False
@@ -38,6 +39,7 @@ class HandTrackingState:
     cursor_x: Optional[float] = None
     cursor_y: Optional[float] = None
     handedness: Optional[str] = None
+    landmarks: Optional[list] = None
 
 
 class HandTracker:
@@ -105,6 +107,7 @@ class HandTracker:
             cursor_x=None,
             cursor_y=None,
             handedness=None,
+            landmarks=None,
         )
 
         if results.multi_hand_landmarks:
@@ -116,14 +119,8 @@ class HandTracker:
             if results.multi_handedness:
                 handedness = results.multi_handedness[0].classification[0].label
 
-            # Draw landmarks on the image
-            mp_drawing.draw_landmarks(
-                image,
-                hand_landmarks,
-                mp_hands.HAND_CONNECTIONS,
-                mp_drawing_styles.get_default_hand_landmarks_style(),
-                mp_drawing_styles.get_default_hand_connections_style(),
-            )
+            # Landmark drawing disabled for cleaner display
+            # (Only cursor dot will be shown in the application)
 
             # Landmarks for different gesture logics
             lms = hand_landmarks.landmark
@@ -159,39 +156,10 @@ class HandTracker:
                 cursor_x=cursor_x,
                 cursor_y=cursor_y,
                 handedness=handedness,
+                landmarks=lms,
             )
 
-            # Optionally overlay state text on the image for debugging/demo.
-            # We show two separate lines, e.g. for right hand:
-            #   RIGHT OPEN / RIGHT CLOSED
-            #   RIGHT PINCH / RIGHT PINCH RELEASED
-            hand_label = (handedness or "").upper().strip()
-            if hand_label:
-                hand_label += " "
-
-            closed_text = f"{hand_label}{'CLOSED' if is_closed else 'OPEN'}"
-            pinch_text = f"{hand_label}{'PINCH' if is_pinch else 'PINCH RELEASED'}"
-
-            cv2.putText(
-                image,
-                closed_text,
-                (10, 30),
-                cv2.FONT_HERSHEY_SIMPLEX,
-                1.0,
-                (0, 255, 0) if not is_closed else (0, 0, 255),
-                2,
-                cv2.LINE_AA,
-            )
-            cv2.putText(
-                image,
-                pinch_text,
-                (10, 70),
-                cv2.FONT_HERSHEY_SIMPLEX,
-                1.0,
-                (0, 255, 0) if not is_pinch else (0, 0, 255),
-                2,
-                cv2.LINE_AA,
-            )
+            # Text overlay removed for cleaner display
 
             # Draw a red dot cursor at the fingertip position, scaled
             # to the current frame size.
