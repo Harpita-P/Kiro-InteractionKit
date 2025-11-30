@@ -44,7 +44,7 @@ Built using Kiro’s <strong>pinch detection</strong>, <strong>hand tracking</st
 <table>
 <tr>
 <td width="40%">
-  <img src="https://github.com/Harpita-P/Kiro-InteractionKit/blob/257795509e8bde6326afdb28a6e9a81c8e28254c/Holo-Board-Demo.gif?raw=true" width="100%">
+  <img src="https://github.com/Harpita-P/Kiro-InteractionKit/blob/257795509e8bde6326afdb28a6e9a81c8e28254c/Holo-Board-Demo.gif?raw=true" width="150%">
 </td>
 <td width="60%">
   <strong>Try it Out:</strong>  
