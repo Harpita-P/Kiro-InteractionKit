@@ -39,23 +39,24 @@ Built using Kiro’s <strong>pinch detection</strong>, <strong>hand tracking</st
 
 ---
 
-### 2. Draw My AAC (Accessibility Tool)
+### 2. Holo-Board (Glassboard for YouTube)
 
 <table>
 <tr>
 <td width="40%">
-  <img src="Math-O-Lantern-App.png" width="100%">
+  <img src="https://github.com/Harpita-P/Kiro-InteractionKit/blob/257795509e8bde6326afdb28a6e9a81c8e28254c/Holo-Board-Demo.gif?raw=true" width="100%">
 </td>
 <td width="60%">
-  <strong>An accessibility tool</strong> that helps non-verbal kids & adults communicate through custom air-drawn gestures.<br><br>
-  <strong>Live Demo:</strong> https://your-demo-link.com  
-  <br><br>
-  This app uses Kiro’s <strong>air-drawing</strong>, <strong>gesture mapping</strong>, and <strong>face/hand tracking</strong> to let users create and trigger their own personalized communication actions.
+  <strong>Try it Out:</strong>  
+  <a href="#2-test-the-featured-applications">Test the Featured Applications</a>  
+<br><br>
+<strong>Holo-Board is a transparent, gesture-controlled whiteboard recorder</strong> that lets you draw in mid-air while your webcam captures you on screen.<br><br>
+You control the whiteboard with simple gestures: <strong>Point</strong> to draw, <strong>Open Hand</strong> to stop, make a <strong>Fist</strong> to change color, and make a <strong>Rock Sign</strong> to clear the canvas. You can create floating annotations just like a studio glassboard.<br><br>
+  The app includes a <strong>Record</strong> button that captures your video, audio, and air-drawn ink into a single downloadable clip. Recordings are saved in the Holo-Board folder.
 </td>
 </tr>
 </table>
 
----
 
 # Get Started with InteractionKit
 
@@ -84,10 +85,11 @@ After completing the setup above, you can run the 2 app inside the `my_apps` fol
 python my_apps/Math-O-Lantern/main.py
 ```
 
-### ✏️ Run AAC (Accessibility Tool)
+### ✏️ Run Holo-Board (Glassboard Video Tool)
 ```bash
-python my_apps/AAC/main.py
+python my_apps/Holo-Board/main.py
 ```
+To change the image being annotated, please replace 'heart-outline-annotate' in the assets folder with a new image with the file name 'annotate-imgname'.
 
 ---
 ## 3. Leverage Kiro's Superpowers
