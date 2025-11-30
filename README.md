@@ -30,7 +30,7 @@ Want to build a **Mario-style game where jumping = open palm**? Make **music jus
 
 <strong>A fun, hand-controlled pumpkin-slicing game</strong> where players solve quick math problems by pinching to slice the correct pumpkins.<br><br>
 
-**Play the Game →** [**Test the Featured Applications**](#2-test-the-featured-applications)<br><br>
+**Play the PyGame →** [**Test the Featured Applications**](#2-test-the-featured-applications)<br><br>
 Built using Kiro’s <strong>pinch detection</strong>, <strong>hand tracking</strong>, and 
 <strong>stabilized gesture signals</strong>, making gameplay feel responsive without any custom CV code.
 </td>
