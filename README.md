@@ -13,7 +13,7 @@ Want to build a **Mario-style game where jumping = open palm**? Make **music jus
 ---
 ## Featured Applications Built With Kiro InteractionKit
 
-### 1. Math-O-Lantern (Interactive Game)
+### 1. Math-O-Lantern (Interactive Game) 🎃
 
 <table>
 <tr>
@@ -39,7 +39,7 @@ Built using Kiro’s <strong>pinch detection</strong>, <strong>hand tracking</st
 
 ---
 
-### 2. Holo-Board (Glassboard for YouTube)
+### 2. Holo-Board (Glassboard for YouTube) ✏️
 
 <table>
 <tr>
