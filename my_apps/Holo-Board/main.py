@@ -18,6 +18,15 @@ import tempfile
 from queue import Queue
 from datetime import datetime
 
+# Try to import tkinter for file dialog, but handle gracefully if not available
+try:
+    import tkinter as tk
+    from tkinter import filedialog
+    TKINTER_AVAILABLE = True
+except ImportError:
+    TKINTER_AVAILABLE = False
+    print("Warning: tkinter not available. Will use pygame-based file browser.")
+
 # Try to import PyAudio, but handle gracefully if not available
 try:
     import pyaudio
@@ -226,10 +235,16 @@ class GestureController:
 class DrawingManager:
     """Manages the transparent drawing layer and pen operations."""
     
-    # Color palette (2 colors: red and blue)
+    # Color palette (8 colors)
     COLOR_PALETTE = [
         (255, 69, 58),    # Red
         (0, 122, 255),    # Blue
+        (52, 199, 89),    # Green
+        (255, 149, 0),    # Orange
+        (255, 214, 10),   # Yellow
+        (191, 90, 242),   # Purple
+        (255, 45, 85),    # Pink
+        (0, 199, 190),    # Cyan
     ]
     
     def __init__(self, width, height, pen_thickness=5):
@@ -951,8 +966,95 @@ class HoloBoardApp:
         pygame.display.set_caption("Holo-Board - Gesture-Controlled Whiteboard")
         self.clock = pygame.time.Clock()
         
-        # Initialize camera capture with error handling
+        # Load launch screen assets
+        assets_dir = os.path.join(os.path.dirname(__file__), "Assets")
+        self.launch_image = pygame.image.load(os.path.join(assets_dir, "Holo-Board-Launch.png"))
+        self.start_button_image = pygame.image.load(os.path.join(assets_dir, "Start-Button.png"))
+        
+        # Start button animation
+        self.button_scale = 1.0
+        self.button_scale_direction = 1
+        self.button_scale_speed = 0.015
+        self.button_min_scale = 0.9
+        self.button_max_scale = 1.1
+        
+        # App state
+        self.app_started = False
+        self.start_button_rect = None
+        
+        # These will be initialized after launch screen
         self.cap = None
+        self.camera_width = None
+        self.camera_height = None
+        self.gesture_controller = None
+        self.drawing_manager = None
+        self.ui_manager = None
+        self.recording_manager = None
+        self.prev_pen_position = None
+        self.smoothed_position = None
+        self.smoothing_factor = 0.5
+        self.annotation_image = None
+        self.annotation_rect = None
+    
+    def _show_launch_screen(self):
+        """Show launch screen and wait for start button click."""
+        waiting = True
+        
+        while waiting:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    return False
+                elif event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_ESCAPE:
+                        return False
+                elif event.type == pygame.MOUSEBUTTONDOWN:
+                    mouse_pos = pygame.mouse.get_pos()
+                    if self.start_button_rect and self.start_button_rect.collidepoint(mouse_pos):
+                        return True
+            
+            # Draw launch screen
+            self.screen.fill((0, 0, 0))
+            
+            # Scale down the launch image to 70% of its original size
+            launch_scale = 0.7
+            scaled_launch_width = int(self.launch_image.get_width() * launch_scale)
+            scaled_launch_height = int(self.launch_image.get_height() * launch_scale)
+            scaled_launch_image = pygame.transform.scale(self.launch_image, (scaled_launch_width, scaled_launch_height))
+            
+            # Draw scaled launch image (centered on screen)
+            launch_rect = scaled_launch_image.get_rect(center=(WINDOW_WIDTH // 2, WINDOW_HEIGHT // 2))
+            self.screen.blit(scaled_launch_image, launch_rect)
+            
+            # Animate start button (pulsing effect - growing and shrinking continuously)
+            self.button_scale += self.button_scale_speed * self.button_scale_direction
+            if self.button_scale >= self.button_max_scale:
+                self.button_scale = self.button_max_scale
+                self.button_scale_direction = -1
+            elif self.button_scale <= self.button_min_scale:
+                self.button_scale = self.button_min_scale
+                self.button_scale_direction = 1
+            
+            # Scale down start button much smaller (base scale of 0.12 = 12% of original size)
+            base_button_scale = 0.12
+            final_button_scale = base_button_scale * self.button_scale
+            button_width = int(self.start_button_image.get_width() * final_button_scale)
+            button_height = int(self.start_button_image.get_height() * final_button_scale)
+            scaled_button = pygame.transform.scale(self.start_button_image, (button_width, button_height))
+            
+            # Position: slightly right of center, very close to bottom
+            button_x = (WINDOW_WIDTH - button_width) // 2 + 60  # Shifted 60px to the right
+            button_y = WINDOW_HEIGHT - button_height - 10  # Very close to bottom
+            self.start_button_rect = pygame.Rect(button_x, button_y, button_width, button_height)
+            
+            self.screen.blit(scaled_button, (button_x, button_y))
+            
+            pygame.display.flip()
+            self.clock.tick(FPS)
+        
+        return False
+    
+    def _initialize_camera_and_components(self):
+        """Initialize camera and all components after launch screen."""
         camera_error = None
         
         try:
@@ -998,20 +1100,22 @@ class HoloBoardApp:
         # Initialize UIManager
         self.ui_manager = UIManager(WINDOW_WIDTH, WINDOW_HEIGHT)
         
-        # Initialize RecordingManager with Holo-Board directory as output location
+        # Initialize RecordingManager with Recordings directory as output location
         holo_board_dir = os.path.dirname(os.path.abspath(__file__))
-        self.recording_manager = RecordingManager(output_directory=holo_board_dir)
+        recordings_dir = os.path.join(holo_board_dir, "Recordings")
         
-        # Track previous pen position for stroke continuity
-        self.prev_pen_position = None
+        # Create Recordings directory if it doesn't exist
+        if not os.path.exists(recordings_dir):
+            try:
+                os.makedirs(recordings_dir)
+                print(f"Created Recordings directory: {recordings_dir}")
+            except Exception as e:
+                print(f"Warning: Could not create Recordings directory: {e}")
+                recordings_dir = holo_board_dir  # Fallback to main directory
         
-        # Smoothing for reducing shakiness
-        self.smoothed_position = None
-        self.smoothing_factor = 0.5  # 0 = no smoothing, 1 = maximum smoothing
+        self.recording_manager = RecordingManager(output_directory=recordings_dir)
         
         # Image annotation feature
-        self.annotation_image = None
-        self.annotation_rect = None
         self._prompt_for_image_annotation()
         
         print(f"Holo-Board initialized")
@@ -1064,26 +1168,405 @@ class HoloBoardApp:
     
     def _prompt_for_image_annotation(self):
         """
-        Automatically check Assets folder for images with 'annotate' in the filename.
-        If found, load the first matching image.
+        Open file picker to select an annotation image.
+        User can press ESC to skip if they don't want an image.
         """
-        assets_dir = os.path.join(os.path.dirname(__file__), "Assets")
+        if TKINTER_AVAILABLE:
+            # Use tkinter file dialog for GUI file selection
+            try:
+                root = tk.Tk()
+                root.withdraw()
+                root.attributes('-topmost', True)
+                
+                # Set initial directory to Annotate folder
+                annotate_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "Annotate")
+                if not os.path.exists(annotate_dir):
+                    annotate_dir = os.path.dirname(os.path.abspath(__file__))
+                
+                # Open file dialog
+                file_path = filedialog.askopenfilename(
+                    title="Select an annotation image (or cancel to skip)",
+                    filetypes=[
+                        ("Image files", "*.png *.jpg *.jpeg"),
+                        ("PNG files", "*.png"),
+                        ("JPEG files", "*.jpg *.jpeg"),
+                        ("All files", "*.*")
+                    ],
+                    initialdir=annotate_dir
+                )
+                
+                root.destroy()
+                
+                if file_path and os.path.exists(file_path):
+                    if file_path.lower().endswith(('.png', '.jpg', '.jpeg')):
+                        self._load_annotation_image(file_path)
+                        print(f"✓ Loaded: {os.path.basename(file_path)}")
+                    else:
+                        print("✗ Error: Only PNG and JPG files are supported")
+                else:
+                    print("No image selected. Starting without annotation image.")
+            except Exception as e:
+                print(f"Error with file dialog: {e}")
+                print("Starting without annotation image.")
+        else:
+            # Fallback: Use pygame-based file browser
+            file_path = self._show_pygame_file_browser()
+            
+            if file_path and os.path.exists(file_path):
+                if file_path.lower().endswith(('.png', '.jpg', '.jpeg')):
+                    self._load_annotation_image(file_path)
+                    print(f"✓ Loaded: {os.path.basename(file_path)}")
+                else:
+                    print("✗ Error: Only PNG and JPG files are supported")
+            else:
+                print("No image selected. Starting without annotation image.")
+    
+    def _show_pygame_file_browser(self):
+        """
+        Show a modern pygame-based file browser for selecting images.
+        Returns the selected file path or None if cancelled.
+        """
+        # Light theme with turquoise accents
+        bg_color = (245, 248, 250)  # Light blue-gray background
+        card_color = (255, 255, 255)  # White card
+        item_color = (248, 250, 252)  # Very light gray for items
+        item_hover = (235, 245, 250)  # Light blue-gray on hover
+        selected_color = (0, 128, 128)  # Dark turquoise for selected
+        text_primary = (40, 50, 60)  # Dark text
+        text_secondary = (100, 110, 120)  # Medium gray text
+        turquoise = (0, 128, 128)  # Dark turquoise accent
+        shadow_color = (200, 210, 220)  # Subtle shadow
         
-        if not os.path.exists(assets_dir):
-            return
+        # Start in the Annotate directory
+        current_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "Annotate")
+        if not os.path.exists(current_dir):
+            current_dir = os.path.dirname(os.path.abspath(__file__))
         
-        # Look for images with 'annotate' in the filename
-        for filename in os.listdir(assets_dir):
-            if 'annotate' in filename.lower():
-                # Check if it's an image file
-                if filename.lower().endswith(('.png', '.jpg', '.jpeg', '.bmp', '.gif')):
-                    image_path = os.path.join(assets_dir, filename)
-                    self._load_annotation_image(image_path)
-                    print(f"Found annotation image: {filename}")
-                    return
+        # Get list of image files in current directory
+        def get_image_files(directory):
+            files = []
+            try:
+                for item in sorted(os.listdir(directory)):
+                    full_path = os.path.join(directory, item)
+                    if os.path.isfile(full_path) and item.lower().endswith(('.png', '.jpg', '.jpeg')):
+                        files.append(item)
+            except Exception as e:
+                print(f"Error reading directory: {e}")
+            return files
         
-        # No annotation image found
-        print("No annotation image found in Assets folder (looking for 'annotate' in filename)")
+        files = get_image_files(current_dir)
+        selected_index = 0 if files else -1
+        scroll_offset = 0
+        max_visible = 8
+        
+        browsing = True
+        selected_file = None
+        
+        font_title = pygame.font.SysFont('Arial', 52, bold=True)
+        font_subtitle = pygame.font.SysFont('Arial', 28)
+        font_item = pygame.font.SysFont('Arial', 32)
+        font_hint = pygame.font.SysFont('Arial', 22)
+        
+        # Animation
+        hover_index = -1
+        
+        while browsing:
+            mouse_pos = pygame.mouse.get_pos()
+            
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    browsing = False
+                elif event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_ESCAPE:
+                        browsing = False
+                    elif event.key == pygame.K_UP and files:
+                        selected_index = max(0, selected_index - 1)
+                        if selected_index < scroll_offset:
+                            scroll_offset = selected_index
+                    elif event.key == pygame.K_DOWN and files:
+                        selected_index = min(len(files) - 1, selected_index + 1)
+                        if selected_index >= scroll_offset + max_visible:
+                            scroll_offset = selected_index - max_visible + 1
+                    elif event.key == pygame.K_RETURN and files and selected_index >= 0:
+                        selected_file = os.path.join(current_dir, files[selected_index])
+                        browsing = False
+                elif event.type == pygame.MOUSEBUTTONDOWN and files:
+                    # Check if clicked on a file item
+                    if hover_index >= 0:
+                        selected_index = hover_index
+                        selected_file = os.path.join(current_dir, files[selected_index])
+                        browsing = False
+            
+            # Draw light background
+            self.screen.fill(bg_color)
+            
+            # Draw card shadow
+            card_padding = 80
+            shadow_rect = pygame.Rect(
+                card_padding - 5,
+                card_padding - 5,
+                WINDOW_WIDTH - (card_padding - 5) * 2,
+                WINDOW_HEIGHT - (card_padding - 5) * 2
+            )
+            self._draw_rounded_rect(self.screen, shadow_color, shadow_rect, radius=30)
+            
+            # Draw main card
+            card_rect = pygame.Rect(
+                card_padding,
+                card_padding,
+                WINDOW_WIDTH - card_padding * 2,
+                WINDOW_HEIGHT - card_padding * 2
+            )
+            self._draw_rounded_rect(self.screen, card_color, card_rect, radius=25)
+            
+            # Draw title in turquoise
+            title = font_title.render("Select Image to Annotate", True, turquoise)
+            title_rect = title.get_rect(center=(WINDOW_WIDTH // 2, 130))
+            self.screen.blit(title, title_rect)
+            
+            # Don't show directory info - cleaner look
+            
+            # Draw file list container
+            list_start_y = 250
+            list_height = WINDOW_HEIGHT - 400
+            item_height = 60
+            item_padding = 10
+            
+            # Draw files
+            if not files:
+                no_files = font_item.render("No image files found", True, (255, 100, 100))
+                no_files_rect = no_files.get_rect(center=(WINDOW_WIDTH // 2, WINDOW_HEIGHT // 2))
+                self.screen.blit(no_files, no_files_rect)
+            else:
+                visible_files = files[scroll_offset:scroll_offset + max_visible]
+                hover_index = -1
+                
+                for i, filename in enumerate(visible_files):
+                    actual_index = scroll_offset + i
+                    y = list_start_y + i * (item_height + item_padding)
+                    
+                    # Item rectangle
+                    item_rect = pygame.Rect(
+                        card_padding + 40,
+                        y,
+                        WINDOW_WIDTH - (card_padding + 40) * 2,
+                        item_height
+                    )
+                    
+                    # Check hover
+                    is_hovered = item_rect.collidepoint(mouse_pos)
+                    if is_hovered:
+                        hover_index = actual_index
+                    
+                    # Determine item color
+                    if actual_index == selected_index:
+                        item_bg_color = selected_color
+                        text_color = (255, 255, 255)
+                    elif is_hovered:
+                        item_bg_color = item_hover
+                        text_color = text_primary
+                    else:
+                        item_bg_color = item_color
+                        text_color = text_secondary
+                    
+                    # Draw item background
+                    self._draw_rounded_rect(self.screen, item_bg_color, item_rect, radius=12)
+                    
+                    # Draw file name
+                    file_text = font_item.render(filename, True, text_color)
+                    file_rect = file_text.get_rect(midleft=(item_rect.left + 20, item_rect.centery))
+                    self.screen.blit(file_text, file_rect)
+                
+                # Draw scroll indicator if needed
+                if len(files) > max_visible:
+                    scroll_bar_height = 200
+                    scroll_bar_y = list_start_y + (scroll_offset / len(files)) * scroll_bar_height
+                    scroll_indicator = pygame.Rect(
+                        WINDOW_WIDTH - card_padding - 20,
+                        scroll_bar_y,
+                        8,
+                        40
+                    )
+                    self._draw_rounded_rect(self.screen, turquoise, scroll_indicator, radius=4)
+            
+
+            
+            pygame.display.flip()
+            self.clock.tick(60)
+        
+        return selected_file
+    
+    def _draw_rounded_rect(self, surface, color, rect, radius=20):
+        """Draw a rounded rectangle."""
+        pygame.draw.rect(surface, color, rect, border_radius=radius)
+    
+    def _draw_button(self, surface, text, x, y, width, height, color, hover_color, is_hovered, font):
+        """Draw a modern button with hover effect."""
+        button_rect = pygame.Rect(x, y, width, height)
+        
+        # Draw button with hover effect
+        current_color = hover_color if is_hovered else color
+        self._draw_rounded_rect(surface, current_color, button_rect, radius=15)
+        
+        # Draw text
+        text_surface = font.render(text, True, (255, 255, 255))
+        text_rect = text_surface.get_rect(center=button_rect.center)
+        surface.blit(text_surface, text_rect)
+        
+        return button_rect
+    
+    def _show_pygame_dialog(self, title, lines):
+        """
+        Show a modern yes/no dialog using Pygame.
+        
+        Args:
+            title: Dialog title
+            lines: List of text lines to display
+            
+        Returns:
+            Boolean: True if user pressed Y, False if pressed N
+        """
+        # Light theme with turquoise accents
+        bg_color = (245, 248, 250)  # Light blue-gray background
+        card_color = (255, 255, 255)  # White card
+        turquoise = (0, 128, 128)  # Dark turquoise
+        turquoise_hover = (0, 160, 160)  # Lighter turquoise on hover
+        cancel_color = (180, 190, 200)  # Light gray
+        cancel_hover = (160, 170, 180)  # Darker gray on hover
+        text_dark = (40, 50, 60)  # Dark text for body
+        shadow_color = (200, 210, 220)  # Subtle shadow
+        
+        font_title = pygame.font.SysFont('Arial', 56, bold=True)
+        font_body = pygame.font.SysFont('Arial', 32)
+        font_button = pygame.font.SysFont('Arial', 36, bold=True)
+        
+        # Button states
+        yes_hovered = False
+        no_hovered = False
+        
+        # Button dimensions
+        button_width = 200
+        button_height = 60
+        button_spacing = 40
+        
+        waiting = True
+        response = False
+        
+        while waiting:
+            mouse_pos = pygame.mouse.get_pos()
+            
+            # Check button hover states
+            yes_button_rect = pygame.Rect(
+                WINDOW_WIDTH // 2 - button_width - button_spacing // 2,
+                WINDOW_HEIGHT - 150,
+                button_width,
+                button_height
+            )
+            no_button_rect = pygame.Rect(
+                WINDOW_WIDTH // 2 + button_spacing // 2,
+                WINDOW_HEIGHT - 150,
+                button_width,
+                button_height
+            )
+            
+            yes_hovered = yes_button_rect.collidepoint(mouse_pos)
+            no_hovered = no_button_rect.collidepoint(mouse_pos)
+            
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    waiting = False
+                    response = False
+                elif event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_y:
+                        waiting = False
+                        response = True
+                    elif event.key == pygame.K_n:
+                        waiting = False
+                        response = False
+                    elif event.key == pygame.K_ESCAPE:
+                        waiting = False
+                        response = False
+                elif event.type == pygame.MOUSEBUTTONDOWN:
+                    if yes_hovered:
+                        waiting = False
+                        response = True
+                    elif no_hovered:
+                        waiting = False
+                        response = False
+            
+            # Draw light background
+            self.screen.fill(bg_color)
+            
+            # Draw card shadow (subtle)
+            shadow_rect = pygame.Rect(
+                WINDOW_WIDTH // 2 - 395,
+                WINDOW_HEIGHT // 2 - 245,
+                810,
+                510
+            )
+            self._draw_rounded_rect(self.screen, shadow_color, shadow_rect, radius=30)
+            
+            # Draw card background
+            card_rect = pygame.Rect(
+                WINDOW_WIDTH // 2 - 400,
+                WINDOW_HEIGHT // 2 - 250,
+                800,
+                500
+            )
+            self._draw_rounded_rect(self.screen, card_color, card_rect, radius=25)
+            
+            # Draw title in turquoise
+            title_text = font_title.render(title, True, turquoise)
+            title_rect = title_text.get_rect(center=(WINDOW_WIDTH // 2, WINDOW_HEIGHT // 2 - 150))
+            self.screen.blit(title_text, title_rect)
+            
+            # Draw message lines in dark text
+            y_offset = WINDOW_HEIGHT // 2 - 60
+            for line in lines:
+                if line:
+                    line_text = font_body.render(line, True, text_dark)
+                    line_rect = line_text.get_rect(center=(WINDOW_WIDTH // 2, y_offset))
+                    self.screen.blit(line_text, line_rect)
+                y_offset += 45
+            
+            # Draw Yes button (turquoise)
+            self._draw_button(
+                self.screen,
+                "Yes",
+                yes_button_rect.x,
+                yes_button_rect.y,
+                button_width,
+                button_height,
+                turquoise,
+                turquoise_hover,
+                yes_hovered,
+                font_button
+            )
+            
+            # Draw No button (gray)
+            self._draw_button(
+                self.screen,
+                "No",
+                no_button_rect.x,
+                no_button_rect.y,
+                button_width,
+                button_height,
+                cancel_color,
+                cancel_hover,
+                no_hovered,
+                font_button
+            )
+            
+            # Draw hint
+            hint_font = pygame.font.SysFont('Arial', 22)
+            hint_text = hint_font.render("Click a button or press ESC to cancel", True, (100, 110, 120))
+            hint_rect = hint_text.get_rect(center=(WINDOW_WIDTH // 2, WINDOW_HEIGHT - 50))
+            self.screen.blit(hint_text, hint_rect)
+            
+            pygame.display.flip()
+            self.clock.tick(60)
+        
+        return response
     
     def _load_annotation_image(self, image_path):
         """
@@ -1298,6 +1781,15 @@ class HoloBoardApp:
     
     def run(self):
         """Main application loop."""
+        # Show launch screen first
+        if not self._show_launch_screen():
+            # User closed window or pressed ESC on launch screen
+            pygame.quit()
+            return
+        
+        # Initialize camera and components after user clicks start
+        self._initialize_camera_and_components()
+        
         running = True
         
         print("Holo-Board running. Press ESC to exit.")
