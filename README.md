@@ -131,13 +131,13 @@ Delete the 2 existing applications in the `my_apps` folder and create a new fold
 
 ### Example Spec for a Hand-Controlled Fruit Ninja Game  
 ```
-This app is a basic fruit-slice game controlled by hand gestures. 
-Fruits and bombs fall from the top of the screen. The player moves a cursor 
-using an open hand and slices by performing a pinch gesture. Slicing a fruit 
-awards 5 points. The player begins with 3 lives shown as hearts, and pinching 
-a bomb causes it to explode and removes one life. When all lives are gone, 
-the game ends. The game should include background music and sound effects, 
-and all assets will be provided.
+Build an app called Fruit Ninja, a basic fruit-slice game controlled by hand gestures.
+Fruits and bombs fall from the top of the screen. The player moves a cursor using an
+open hand and slices by performing a pinch gesture. Slicing a fruit awards 5 points.
+The player begins with 3 lives shown as hearts, and pinching a bomb causes it to
+explode and removes one life. When all lives are gone, the game ends. The game will
+include background music and sound effects, and all assets such as images and
+audio have been provided.
 ```
 After creating your spec, Kiro will use the Hooks, Steering Docs, and MCP integration to design and build your app. All development occurs inside the `my_apps` folder, and any assets (images, audio, fonts) should be placed in your app’s `assets` directory. Kiro will automatically decide which gestures to implement—or generate new ones if needed.
 
