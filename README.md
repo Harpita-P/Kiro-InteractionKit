@@ -8,7 +8,7 @@ Kiro InteractionKit gives developers a lightweight, flexible foundation for turn
 
 This code skeleton removes all the complexity of **MediaPipe + Computer Vision code** and gives you a clear Python **interaction layer** you can plug directly into games, creative apps & accessibility tools.
 
-Want to build a **Mario-style game where jumping = open palm**? Make **music just by moving your head**? Or **draw in mid-air with your fingertip** for a fresh twist on Pictionary? Speed up development and build  creative apps with the Kiro InteractionKit.
+Want to build a **Mario-style game where jumping = pinch your fingers**? Make **music just by moving your head**? Or **draw in mid-air with your fingertip** for a fresh twist on Pictionary? Speed up development and build  creative apps with the Kiro InteractionKit.
 
 ---
 ## Featured Applications Built With Kiro InteractionKit
@@ -31,8 +31,6 @@ Want to build a **Mario-style game where jumping = open palm**? Make **music jus
 <strong>A fun, hand-controlled pumpkin-slicing game</strong> where players solve quick math problems by pinching to slice the correct pumpkins.<br><br>
 
 **Play the PyGame →** [**Test the Featured Applications**](#2-test-the-featured-applications)<br><br>
-Built using Kiro’s <strong>pinch detection</strong>, <strong>hand tracking</strong>, and 
-<strong>stabilized gesture signals</strong>, making gameplay feel responsive without any custom CV code.
 </td>
 </tr>
 </table>
@@ -40,25 +38,37 @@ Built using Kiro’s <strong>pinch detection</strong>, <strong>hand tracking</st
 ---
 
 ### 2. Holo-Board (Lightboard-Inspired Tool for Videos) ✏️
-
 <table>
 <tr>
-<td width="40%" align="center">
-  <img src="https://github.com/Harpita-P/Kiro-InteractionKit/blob/257795509e8bde6326afdb28a6e9a81c8e28254c/Holo-Board-Demo.gif?raw=true" width="150%"><br>
-  <img src="https://github.com/Harpita-P/Kiro-InteractionKit/blob/0e0a131218c3c724d160e8b2b4131f6a87a027a0/Using-Holo-Board.gif?raw=true" width="150%">
+<td align="center" style="white-space:nowrap;">
+
+<img src="https://github.com/Harpita-P/Kiro-InteractionKit/blob/257795509e8bde6326afdb28a6e9a81c8e28254c/Holo-Board-Demo.gif?raw=true" height="180" style="display:inline-block;margin-right:8px;" />
+<img src="https://github.com/Harpita-P/Kiro-InteractionKit/blob/66e834f77860b8fce8f8dc5d3405288e7ea970c3/Holo-Board-Launch.png?raw=true" height="180" style="display:inline-block;margin-right:8px;" />
+<img src="https://github.com/Harpita-P/Kiro-InteractionKit/blob/0e0a131218c3c724d160e8b2b4131f6a87a027a0/Using-Holo-Board.gif?raw=true" height="180" style="display:inline-block;" />
+
 </td>
-<td width="60%">
-  <strong>Try it Out:</strong>  
-  <a href="#2-test-the-featured-applications">Test the Featured Applications</a>  
-<br><br>
-<strong>Holo-Board is a transparent, gesture-controlled whiteboard recorder</strong> that lets you draw in mid-air while your webcam captures you on screen.<br><br>
-You control the whiteboard with simple gestures: <strong>Point</strong> to draw, <strong>Open Hand</strong> to stop, make a <strong>Fist</strong> to change color, and make a <strong>Rock Sign</strong> to clear the canvas. You can create floating annotations in your videos just like a studio lightboard, but with no expensive equipment required! <br><br>
-The app includes a <strong>Record</strong> button that captures your video, audio, and air-drawn ink into a single downloadable clip. Recordings are saved in the Holo-Board recordings folder.
+</tr>
+
+<tr>
+<td>
+
+<strong>A transparent, gesture-controlled glassboard recorder</strong> that lets you draw in mid-air while your webcam keeps you visible on screen.<br><br>
+
+Control the board with simple gestures:
+<ul>
+<li><strong>Point</strong> → Draw</li>
+<li><strong>Open Hand</strong> → Stop drawing</li>
+<li><strong>Fist</strong> → Change color</li>
+<li><strong>Rock Sign</strong> → Clear canvas</li>
+</ul>
+
+Create floating annotations like a studio lightboard and export a single clip with <strong>recorded video, audio, and ink</strong>.<br><br>
+
+**Try the App →** <a href="#2-test-the-featured-applications">Test the Featured Applications</a>
+
 </td>
 </tr>
 </table>
-
-
 
 # Get Started with InteractionKit
 
