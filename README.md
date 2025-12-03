@@ -39,23 +39,25 @@ Built using Kiro’s <strong>pinch detection</strong>, <strong>hand tracking</st
 
 ---
 
-### 2. Holo-Board (Glassboard for YouTube) ✏️
+### 2. Holo-Board (Lightboard-Inspired Tool for Videos) ✏️
 
 <table>
 <tr>
-<td width="40%">
-  <img src="https://github.com/Harpita-P/Kiro-InteractionKit/blob/257795509e8bde6326afdb28a6e9a81c8e28254c/Holo-Board-Demo.gif?raw=true" width="150%">
+<td width="40%" align="center">
+  <img src="https://github.com/Harpita-P/Kiro-InteractionKit/blob/257795509e8bde6326afdb28a6e9a81c8e28254c/Holo-Board-Demo.gif?raw=true" width="150%"><br>
+  <img src="https://github.com/Harpita-P/Kiro-InteractionKit/blob/0e0a131218c3c724d160e8b2b4131f6a87a027a0/Using-Holo-Board.gif?raw=true" width="150%">
 </td>
 <td width="60%">
   <strong>Try it Out:</strong>  
   <a href="#2-test-the-featured-applications">Test the Featured Applications</a>  
 <br><br>
 <strong>Holo-Board is a transparent, gesture-controlled whiteboard recorder</strong> that lets you draw in mid-air while your webcam captures you on screen.<br><br>
-You control the whiteboard with simple gestures: <strong>Point</strong> to draw, <strong>Open Hand</strong> to stop, make a <strong>Fist</strong> to change color, and make a <strong>Rock Sign</strong> to clear the canvas. You can create floating annotations just like a studio glassboard.<br><br>
-  The app includes a <strong>Record</strong> button that captures your video, audio, and air-drawn ink into a single downloadable clip. Recordings are saved in the Holo-Board folder.
+You control the whiteboard with simple gestures: <strong>Point</strong> to draw, <strong>Open Hand</strong> to stop, make a <strong>Fist</strong> to change color, and make a <strong>Rock Sign</strong> to clear the canvas. You can create floating annotations in your videos just like a studio lightboard, but with no expensive equipment required! <br><br>
+The app includes a <strong>Record</strong> button that captures your video, audio, and air-drawn ink into a single downloadable clip. Recordings are saved in the Holo-Board recordings folder.
 </td>
 </tr>
 </table>
+
 
 
 # Get Started with InteractionKit
@@ -85,11 +87,11 @@ After completing the setup above, you can run the 2 app inside the `my_apps` fol
 python my_apps/Math-O-Lantern/main.py
 ```
 
-### ✏️ Run Holo-Board (Glassboard Video Tool)
+### ✏️ Run Holo-Board (Lightboard-Inspired Video Tool)
 ```bash
 python my_apps/Holo-Board/main.py
 ```
-To change the image being annotated, please replace 'heart-outline-annotate' in the assets folder with a new image with the file name 'annotate-imgname'.
+To customize the images in your video, please add your images to the Annotate folder.
 
 ---
 ## 3. Leverage Kiro's Superpowers
