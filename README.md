@@ -78,11 +78,8 @@ Create floating annotations like a studio lightboard and export a single clip wi
 git clone https://github.com/Harpita-P/Kiro-InteractionKit.git
 cd Kiro-InteractionKit
 
-# macOS / Linux
-./setup.sh
-
-# Windows
-.\setup.bat
+./setup.sh # macOS / Linux
+.\setup.bat # Windows
 ```
 
 The setup script tests your camera and prepares a virtual environment with Mediapipe, OpenCV, Pygame, and PyAutoGUI.
