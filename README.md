@@ -1,4 +1,4 @@
-![Kiro InteractionKit Banner](Github-Banner.png)
+![Kiro InteractionKit Banner](xmedia/Github-Banner.png)
 
 # Kiro InteractionKit
 
@@ -19,8 +19,8 @@ Want to build a **Mario-style game where jumping = pinch your fingers**? Make **
 <tr>
 <td align="center">
 
-<img src="Math-O-Lantern-App.png" height="200" style="margin-right:8px;" />
-<img src="https://github.com/Harpita-P/Kiro-InteractionKit/blob/main/MathGame.gif?raw=true" height="200" />
+<img src="xmedia/Math-O-Lantern-App.png" height="200" style="margin-right:8px;" />
+<img src="https://github.com/Harpita-P/Kiro-InteractionKit/blob/main/xmedia/MathGame.gif?raw=true" height="200" />
 
 </td>
 </tr>
@@ -42,9 +42,9 @@ Want to build a **Mario-style game where jumping = pinch your fingers**? Make **
 <tr>
 <td align="center" style="white-space:nowrap;">
 
-<img src="https://github.com/Harpita-P/Kiro-InteractionKit/blob/257795509e8bde6326afdb28a6e9a81c8e28254c/Holo-Board-Demo.gif?raw=true" height="180" style="display:inline-block;margin-right:8px;" />
-<img src="https://github.com/Harpita-P/Kiro-InteractionKit/blob/66e834f77860b8fce8f8dc5d3405288e7ea970c3/Holo-Board-Launch.png?raw=true" height="180" style="display:inline-block;margin-right:8px;" />
-<img src="https://github.com/Harpita-P/Kiro-InteractionKit/blob/0e0a131218c3c724d160e8b2b4131f6a87a027a0/Using-Holo-Board.gif?raw=true" height="180" style="display:inline-block;" />
+<img src="https://raw.githubusercontent.com/Harpita-P/Kiro-InteractionKit/main/xmedia/Holo-Board-Demo.gif" height="180" style="display:inline-block;margin-right:8px;" />
+<img src="https://raw.githubusercontent.com/Harpita-P/Kiro-InteractionKit/main/xmedia/Holo-Board-Launch.png" height="180" style="display:inline-block;margin-right:8px;" />
+<img src="https://raw.githubusercontent.com/Harpita-P/Kiro-InteractionKit/main/xmedia/Using-Holo-Board.gif" height="180" style="display:inline-block;" />
 
 </td>
 </tr>
